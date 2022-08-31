@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -63,6 +64,18 @@ namespace ParaTest.Models.Cityzen
                 if (NewCityzen.DeathDate != DeathDate)
                     DeathDate = NewCityzen.DeathDate;
             }
+        }
+
+        public override string ToString()
+        {
+            System.Text.StringBuilder SB = new();
+            SB.Append($"{Id};");
+            SB.Append($"\"{FullName}\";");
+            SB.Append($"\"{SNILS}\";");
+            SB.Append($"\"{INN}\";");
+            SB.Append($"\"{BirthDate.ToString("yyyy-MM-dd HH:mm:ss")}\";");
+            SB.Append($"\"{(DeathDate.HasValue ? DeathDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : "NULL")}\"");
+            return SB.ToString();
         }
     }
 }

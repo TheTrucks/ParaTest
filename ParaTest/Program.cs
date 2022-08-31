@@ -20,7 +20,10 @@ namespace ParaTest
 
                 builder.Services.AddDbContext<CityzenDbContext>(opts =>
                     opts.UseSqlServer(builder.Configuration["DbConnString"]));
-                builder.Services.AddScoped<CityzenDataProvider, CityzenMssqlData>();
+                builder.Services.AddScoped<ICityzenDataGetter, CityzenMssqlGetData>();
+                builder.Services.AddScoped<ICityzenDataSetter, CityzenMssqlSetData>();
+
+                builder.Services.AddScoped<ICityzenSerializer, BasicCityzenSerializer>();
 
                 builder.Services.AddControllers();
                 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

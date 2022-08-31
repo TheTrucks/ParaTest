@@ -22,19 +22,4 @@
         string Message { get; set; }
         bool Success { get; set; }
     }
-
-    public abstract class CityzenDataProvider : ICityzenDataGetter, ICityzenDataSetter
-    {
-        public abstract Task<IEnumerable<Cityzen>> GetByBirthDate(DateTime BirthDate);
-        public abstract Task<IEnumerable<Cityzen>> GetByDeathDate(DateTime? DeathDate);
-        public abstract Task<IEnumerable<Cityzen>> GetByDTO(GetCityzenDTO Input);
-        public abstract Task<IEnumerable<Cityzen>> GetByFullName(string FullName);
-        public abstract Task<Cityzen?> GetByINN(string INN);
-        public abstract Task<Cityzen?> GetBySNILS(string SNILS);
-
-
-        public abstract Task<ISetterResponse> Insert(Cityzen NewCityzen);
-        public abstract Task<ISetterResponse> Update(Cityzen UpdCityzen);
-        public abstract Task<ISetterResponse> Delete(long Id);
-    }
 }

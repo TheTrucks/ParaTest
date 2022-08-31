@@ -6,10 +6,10 @@ namespace ParaTest.Controllers
     [ApiController]
     [Route("[controller]/[action]")]
     [Produces("application/json")]
-    public class CityzenController : ControllerBase
+    public class CityzenJsonGetController : ControllerBase
     {
-        private readonly CityzenDataProvider _ctProvider;
-        public CityzenController(CityzenDataProvider CtProvider)
+        private readonly ICityzenDataGetter _ctProvider;
+        public CityzenJsonGetController(ICityzenDataGetter CtProvider)
         {
             _ctProvider = CtProvider;
         }
@@ -63,33 +63,6 @@ namespace ParaTest.Controllers
         public async Task<JsonResult> GetByDTOPost([FromBody] GetCityzenDTO InputModel)
         {
             return new JsonResult(await _ctProvider.GetByDTO(InputModel));
-        }
-
-        [AcceptVerbs(new string[] { "HttpPost", "HttpPut" })]
-        public async Task<JsonResult> Insert([FromBody] Cityzen Input)
-        {
-            return GetSetJsonResult(await _ctProvider.Insert(Input));
-        }
-
-        [AcceptVerbs(new string[] { "HttpPost", "HttpPut" })]
-        public async Task<JsonResult> Update([FromBody] Cityzen Input)
-        {
-            return GetSetJsonResult(await _ctProvider.Update(Input));
-        }
-
-        [AcceptVerbs(new string[] { "HttpPost", "HttpDelete" })]
-        public async Task<JsonResult> Delete(long Id)
-        {
-            return GetSetJsonResult(await _ctProvider.Delete(Id));
-        }
-
-        private JsonResult GetSetJsonResult(ISetterResponse Input)
-        {
-            var Result = new JsonResult(Input);
-            Result.StatusCode = Input.Success
-                ? (int)System.Net.HttpStatusCode.OK
-                : (int)System.Net.HttpStatusCode.NotFound;
-            return Result;
         }
     }
 }
